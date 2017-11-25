@@ -1,9 +1,9 @@
 #! /usr/bin/python3
-import symulator
+from symulator import Symulator
 width, height = 800, 600
 
 def main():
-    symulator.start(width, height)
+    Symulator().start(width, height)
     print('in main')
 
 if __name__ == "__main__":
