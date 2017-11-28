@@ -1,14 +1,14 @@
 import math
 
 def colided(lhs, rhs):
-    xDistance = lhs.x - rhs.x
-    yDistance = lhs.y - rhs.y
     colisionDistance = lhs.radious + rhs.radious
     if (lhs.x <= rhs.x + colisionDistance and
         lhs.y <= rhs.y + colisionDistance and
         lhs.x >= rhs.x - colisionDistance and
         lhs.y >= rhs.y - colisionDistance ):
 
+        xDistance = lhs.x - rhs.x
+        yDistance = lhs.y - rhs.y
         distance = math.sqrt(math.pow(xDistance, 2) + math.pow(yDistance, 2))
         if distance <= colisionDistance:
             if distance:
