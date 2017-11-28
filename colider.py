@@ -3,8 +3,25 @@ import math
 def colided(lhs, rhs):
     xDistance = lhs.x - rhs.x
     yDistance = lhs.y - rhs.y
-    distance = math.sqrt(math.pow(xDistance, 2) + math.pow(yDistance, 2))
-    return distance <= (lhs.radious + rhs.radious)
+    colisionDistance = lhs.radious + rhs.radious
+    if (lhs.x <= rhs.x + colisionDistance and
+        lhs.y <= rhs.y + colisionDistance and
+        lhs.x >= rhs.x - colisionDistance and
+        lhs.y >= rhs.y - colisionDistance ):
+
+        distance = math.sqrt(math.pow(xDistance, 2) + math.pow(yDistance, 2))
+        if distance <= colisionDistance:
+            if distance:
+                distanceRatio = colisionDistance/distance
+                lhs.x = (xDistance * distanceRatio) + rhs.x
+                lhs.y = (yDistance * distanceRatio) + rhs.y
+            else:
+                lhs.x = expectedDistance + rhs.x
+            return True
+        else:
+            return False
+    else:
+        return False
 
 
 def colide(ents):
@@ -15,18 +32,12 @@ def colide(ents):
             if colided(e, candidate):
                 x0, y0 = candidate.x - e.x, candidate.y - e.y
                 x1, y1 = e.x - candidate.x, e.y - candidate.y
-                xDistance = e.x - candidate.x
-                yDistance = e.y - candidate.y
-                distance = math.sqrt(math.pow(xDistance, 2) + math.pow(yDistance, 2))
-                if distance:
-                    expectedDistance = e.radious + candidate.radious
-                    e.x = (xDistance * (expectedDistance/distance)) + candidate.x
-                    e.y = (yDistance * (expectedDistance/distance)) + candidate.y
+                distance = e.radious + candidate.radious
 
-                    x0 = x0 / distance
-                    x1 = x1 / distance
-                    y0 = y0 / distance
-                    y1 = y1 / distance
+                x0 = x0 / distance
+                x1 = x1 / distance
+                y0 = y0 / distance
+                y1 = y1 / distance
 
                 dot0 = (e.velocity[0] * x0) + (e.velocity[1] * y0)
                 dot1 = (candidate.velocity[0] * x1) + (candidate.velocity[1] * y1)
