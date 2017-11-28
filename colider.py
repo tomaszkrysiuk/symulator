@@ -8,31 +8,36 @@ def colided(lhs, rhs):
 
 
 def colide(ents):
-    if colided(ents[0], ents[1]):
-        x0, y0 = ents[1].x - ents[0].x, ents[1].y - ents[0].y
-        x1, y1 = ents[0].x - ents[1].x, ents[0].y - ents[1].y
-        xDistance = ents[0].x - ents[1].x
-        yDistance = ents[0].y - ents[1].y
-        distance = math.sqrt(math.pow(xDistance, 2) + math.pow(yDistance, 2))
+    i = 1
+    for e in ents:
 
-        x0 = x0 / distance
-        x1 = x1 / distance
-        y0 = y0 / distance
-        y1 = y1 / distance
+        for candidate in ents[i:]:
+            if colided(e, candidate):
+                x0, y0 = candidate.x - e.x, candidate.y - e.y
+                x1, y1 = e.x - candidate.x, e.y - candidate.y
+                xDistance = e.x - candidate.x
+                yDistance = e.y - candidate.y
+                distance = math.sqrt(math.pow(xDistance, 2) + math.pow(yDistance, 2))
 
-        dot0 = (ents[0].velocity[0] * x0) + (ents[0].velocity[1] * y0)
-        dot1 = (ents[1].velocity[0] * x1) + (ents[1].velocity[1] * y1)
+                x0 = x0 / distance
+                x1 = x1 / distance
+                y0 = y0 / distance
+                y1 = y1 / distance
 
-        odwX0 = x0 * dot0 * -1
-        odwY0 = y0 * dot0 * -1
+                dot0 = (e.velocity[0] * x0) + (e.velocity[1] * y0)
+                dot1 = (candidate.velocity[0] * x1) + (candidate.velocity[1] * y1)
 
-        sumaX = odwX0 + x1 * dot1
-        sumaY = odwY0 + y1 * dot1
+                odwX0 = x0 * dot0 * -1
+                odwY0 = y0 * dot0 * -1
 
-        prawdziweX1 =  - (sumaX/2)*1.5
-        prawdziweY1 =  - (sumaY/2)*1.5
+                sumaX = odwX0 + x1 * dot1
+                sumaY = odwY0 + y1 * dot1
 
-        velocity0 = - prawdziweX1, - prawdziweY1
-        velocity1 = prawdziweX1, prawdziweY1
-        ents[0].applyForce(velocity0[0], velocity0[1])
-        ents[1].applyForce(velocity1[0], velocity1[1])
+                prawdziweX1 =  - (sumaX/2)*1.5
+                prawdziweY1 =  - (sumaY/2)*1.5
+
+                velocity0 = - prawdziweX1, - prawdziweY1
+                velocity1 = prawdziweX1, prawdziweY1
+                e.applyForce(velocity0[0], velocity0[1])
+                candidate.applyForce(velocity1[0], velocity1[1])
+        i += 1

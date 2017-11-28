@@ -44,7 +44,7 @@ class Symulator:
 
     def applyGravity(self, entities):
         for e in entities:
-            e.acceleration = (e.acceleration[0], e.acceleration[1] + 0.45)
+            e.acceleration = (e.acceleration[0], e.acceleration[1] + 0.2)
 
     def drawEntities(self, entities):
         for e in entities:
@@ -72,10 +72,10 @@ class Symulator:
 
     def createBalls(self):
         balls = []
-        for i in range(2):
+        for i in range(40):
             balls.append(Ball((self.width/2) + random.randint(-100, 100),
                               (self.width/2) + random.randint(-100, 100),
-                              random.randint(40, 45),
+                              random.randint(20, 25),
                               black))
         return balls
 
