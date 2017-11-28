@@ -18,11 +18,15 @@ def colide(ents):
                 xDistance = e.x - candidate.x
                 yDistance = e.y - candidate.y
                 distance = math.sqrt(math.pow(xDistance, 2) + math.pow(yDistance, 2))
+                if distance:
+                    expectedDistance = e.radious + candidate.radious
+                    e.x = (xDistance * (expectedDistance/distance)) + candidate.x
+                    e.y = (yDistance * (expectedDistance/distance)) + candidate.y
 
-                x0 = x0 / distance
-                x1 = x1 / distance
-                y0 = y0 / distance
-                y1 = y1 / distance
+                    x0 = x0 / distance
+                    x1 = x1 / distance
+                    y0 = y0 / distance
+                    y1 = y1 / distance
 
                 dot0 = (e.velocity[0] * x0) + (e.velocity[1] * y0)
                 dot1 = (candidate.velocity[0] * x1) + (candidate.velocity[1] * y1)
