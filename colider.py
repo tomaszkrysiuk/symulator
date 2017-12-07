@@ -27,32 +27,24 @@ def colided(lhs, rhs):
 def colide(ents):
     i = 1
     for e in ents:
-
         for candidate in ents[i:]:
             if colided(e, candidate):
-                x0, y0 = candidate.x - e.x, candidate.y - e.y
-                x1, y1 = e.x - candidate.x, e.y - candidate.y
+
+                distanceX, distanceY = e.x - candidate.x, e.y - candidate.y
                 distance = e.radious + candidate.radious
 
-                x0 = x0 / distance
-                x1 = x1 / distance
-                y0 = y0 / distance
-                y1 = y1 / distance
+                normalizedDistanceX = distanceX / distance
+                normalizedDistanceY = distanceY / distance
 
-                dot0 = (e.velocity[0] * x0) + (e.velocity[1] * y0)
-                dot1 = (candidate.velocity[0] * x1) + (candidate.velocity[1] * y1)
+                dot0 = (e.velocity[0] * -normalizedDistanceX) + (e.velocity[1] * -normalizedDistanceY)
+                dot1 = (candidate.velocity[0] * normalizedDistanceX) + (candidate.velocity[1] * normalizedDistanceY)
 
-                odwX0 = x0 * dot0 * -1
-                odwY0 = y0 * dot0 * -1
+                colisionForceX = normalizedDistanceX * (dot0 * e.mass + dot1 * candidate.mass)
+                colisionForceY = normalizedDistanceY * (dot0 * e.mass + dot1 * candidate.mass)
 
-                sumaX = odwX0 + x1 * dot1
-                sumaY = odwY0 + y1 * dot1
+                forceX = (colisionForceX/2)*1.5
+                forceY = (colisionForceY/2)*1.5
 
-                prawdziweX1 =  - (sumaX/2)*1.5
-                prawdziweY1 =  - (sumaY/2)*1.5
-
-                velocity0 = - prawdziweX1, - prawdziweY1
-                velocity1 = prawdziweX1, prawdziweY1
-                e.applyForce(velocity0[0], velocity0[1])
-                candidate.applyForce(velocity1[0], velocity1[1])
+                e.applyForce(forceX, forceY)
+                candidate.applyForce(-forceX, -forceY)
         i += 1

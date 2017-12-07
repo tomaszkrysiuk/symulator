@@ -24,11 +24,11 @@ class TestEntityAcceleration(unittest.TestCase):
     def setUp(self):
         self.e = Entity()
 
-    def test_shouldAccumulateAccelerationWhenForceIsAppliedOnce(self):
+    def test_shouldChangeAccelerationWhenForceIsAppliedOnce(self):
         self.e.applyForce(1, 2)
         self.assertTupleEqual(self.e.acceleration, (1, 2))
 
-    def test_shouldAccumulateAccelerationWhenForceIsAppliedMultipleTimes(self):
+    def test_shouldChangeAccelerationWhenForceIsAppliedMultipleTimes(self):
         self.e.applyForce(3, 4)
         self.e.applyForce(5, 6)
         self.e.applyForce(1, 0)

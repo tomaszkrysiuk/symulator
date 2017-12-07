@@ -3,12 +3,13 @@ import unittest
 from colider import colide
 
 class EntityMock:
-    def __init__(self, x = 0, y = 0, r = 0, velocity = (0, 0)):
+    def __init__(self, x = 0, y = 0, r = 0, velocity = (0, 0), mass = 1):
         self.forceApplied = 0, 0
         self.x = x
         self.y = y
         self.radious = r
         self.velocity = velocity
+        self.mass = mass
 
     def applyForce(self, x, y):
         self.forceApplied = self.forceApplied[0] + x, self.forceApplied[1] + y
@@ -25,15 +26,19 @@ class TestColider(unittest.TestCase):
         for e in entities:
             self.assertTupleEqual(e.forceApplied, (0, 0))
 
-    def test_kuleZTymSamymKierunkiemRuchLeczOPrzeciwnychZwrotachPowinnySieOdbic(self):
+    def test_shouldBounceBackWhenTwoBallsColideHeadOn(self):
         entities = [EntityMock(0, 0, 1, (2, 0)),
                     EntityMock(2, 0, 1, (-2, 0))]
         colide(entities)
-        #self.assertTupleEqual(entities[0].forceApplied, (-3, 0))
+        self.assertTupleEqual(entities[0].forceApplied, (-3, 0))
         self.assertTupleEqual(entities[1].forceApplied, (3, 0))
 
-
-
+    def test_shouldConsiderMassOnImpact(self):
+        entities = [EntityMock(0, 0, 1, (0, 0)),
+                    EntityMock(0, 2, 1, (0, -2), 2)]
+        colide(entities)
+        self.assertTupleEqual(entities[0].forceApplied, (0, -3))
+        self.assertTupleEqual(entities[1].forceApplied, (0, 3))
 
 
 if __name__ == '__main__':

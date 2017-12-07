@@ -53,29 +53,28 @@ class Symulator:
     def moveEntities(self, entities):
         for e in entities:
             e.move()
-            if e.x > self.width:
-                e.x = self.width
-            if e.y > self.height:
+            #if e.x > self.width:
+            #    e.x = self.width
+            if e.y > self.height + 100:
                 e.y = random.randint(0, int(self.height - 300))
-                e.color = colors[random.randint(1, 4)]
                 if random.randint(1, 2) == 1:
-                    e.x = 1
+                    e.x = -100
                     e.velocity = (e.velocity[1]*0.6, -1*e.velocity[1]*0.3)
                 else:
-                    e.x = self.width
+                    e.x = self.width + 100
                     e.velocity = (-1*e.velocity[1]*0.6, -1*e.velocity[1]*0.3)
 
-            if e.x < 0:
-                e.x = 0
+            #if e.x < 0:
+            #    e.x = 0
            # if e.y < 0:
            #     e.y = 0
 
     def createBalls(self):
         balls = []
-        for i in range(40):
+        for i in range(10):
             balls.append(Ball((self.width/2) + random.randint(-100, 100),
                               (self.width/2) + random.randint(-100, 100),
-                              random.randint(20, 25),
-                              black))
+                              random.randint(70, 95),
+                              colors[random.randint(1, 4)]))
         return balls
 
