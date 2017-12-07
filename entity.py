@@ -3,6 +3,8 @@ class Entity:
         self.x = x
         self.y = y
         self.velocity = velocity
+        if mass == 0:
+            mass = 0.001
         self.mass = mass
         self.acceleration = 0.0, 0.0
 
