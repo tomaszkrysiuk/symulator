@@ -25,6 +25,7 @@ def colided(lhs, rhs):
 
 
 def colide(ents):
+    bounceFactor = 1.7
     i = 1
     for e in ents:
         for candidate in ents[i:]:
@@ -39,11 +40,11 @@ def colide(ents):
                 dot0 = (e.velocity[0] * -normalizedDistanceX) + (e.velocity[1] * -normalizedDistanceY)
                 dot1 = (candidate.velocity[0] * normalizedDistanceX) + (candidate.velocity[1] * normalizedDistanceY)
 
-                collisionForceX = normalizedDistanceX * (dot0 * e.mass + dot1 * candidate.mass)
-                collisionForceY = normalizedDistanceY * (dot0 * e.mass + dot1 * candidate.mass)
+                collisionForceX = normalizedDistanceX * (dot0 + dot1)
+                collisionForceY = normalizedDistanceY * (dot0 + dot1)
 
-                forceX = (collisionForceX/2)*1.5
-                forceY = (collisionForceY/2)*1.5
+                forceX = (collisionForceX/2) * bounceFactor
+                forceY = (collisionForceY/2) * bounceFactor
 
                 e.applyForce(forceX, forceY)
                 candidate.applyForce(-forceX, -forceY)
