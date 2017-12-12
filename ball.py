@@ -2,8 +2,8 @@ from entity import Entity
 import pygame
 
 class Ball(Entity):
-    def __init__(self, x, y, r, color, mass = 1):
-        Entity.__init__(self, x, y, (0, 0), mass)
+    def __init__(self, x, y, r, color, velocity = (0, 0), mass = 1):
+        Entity.__init__(self, x, y, velocity, mass)
         self.radious = r
         self.color = color
 

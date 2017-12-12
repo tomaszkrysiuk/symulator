@@ -16,7 +16,7 @@ def colided(lhs, rhs):
                 lhs.x = (xDistance * distanceRatio) + rhs.x
                 lhs.y = (yDistance * distanceRatio) + rhs.y
             else:
-                lhs.x = expectedDistance + rhs.x
+                lhs.x = colisionDistance + rhs.x
             return True
         else:
             return False
@@ -25,7 +25,7 @@ def colided(lhs, rhs):
 
 
 def colide(ents):
-    bounceFactor = 1.7
+    bounceFactor = 2
     i = 1
     for e in ents:
         for candidate in ents[i:]:
